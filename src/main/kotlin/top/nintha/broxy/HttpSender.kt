@@ -1,4 +1,4 @@
-package com.github.nintha
+package top.nintha.broxy
 
 import okhttp3.FormBody
 import okhttp3.OkHttpClient

@@ -1,7 +1,7 @@
-package com.github.nintha.proxi
+package top.nintha.broxy.proxi
 
-import com.github.nintha.NestStorage
-import com.github.nintha.HttpSender
+import top.nintha.broxy.NestStorage
+import top.nintha.broxy.HttpSender
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import java.util.concurrent.CompletableFuture

@@ -1,4 +1,4 @@
-package com.github.nintha
+package top.nintha.broxy
 
 data class ProxyItem(var iaNum: Long) {
     companion object {
@@ -9,7 +9,7 @@ data class ProxyItem(var iaNum: Long) {
     var nextIdleTime: Long = System.currentTimeMillis() // 空闲时间戳
 
     fun getIaString(): String = NestStorage.longToIa(iaNum)
-    fun getIpPortPair(): Pair<String, Int> = Pair(NestStorage.longToIp(iaNum.shr(16)) ,iaNum.and(65535L).toInt())
+    fun getIpPortPair(): Pair<String, Int> = Pair(NestStorage.longToIp(iaNum.shr(16)),iaNum.and(65535L).toInt())
     fun isIdle(): Boolean = System.currentTimeMillis() >= nextIdleTime
     fun isInvalid(): Boolean = filedTimes >= MAX_FAILED_TIMES
     fun isValid(): Boolean = filedTimes < MAX_FAILED_TIMES

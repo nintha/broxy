@@ -1,6 +1,6 @@
-package com.github.nintha.proxi
+package top.nintha.broxy.proxi
 
-import com.github.nintha.HttpSender
+import top.nintha.broxy.HttpSender
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

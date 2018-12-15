@@ -1,9 +1,10 @@
-package com.github.nintha
+package top.nintha.broxy
 
-import com.github.nintha.proxi.*
+
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import top.nintha.broxy.proxi.*
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.concurrent.CompletableFuture
