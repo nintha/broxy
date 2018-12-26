@@ -8,6 +8,7 @@ import java.util.*
 private val logger: Logger = LoggerFactory.getLogger("Launcher")
 
 fun main(args: Array<String>) {
+    System.setProperty("vertx.logger-delegate-factory-class-name", "io.vertx.core.logging.SLF4JLogDelegateFactory")
     logger.info("==================== start.")
     Vertx.vertx().deployVerticle(MainServer())
     launchNestStorage()
