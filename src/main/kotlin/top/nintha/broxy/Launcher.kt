@@ -7,12 +7,20 @@ import java.util.*
 
 private val logger: Logger = LoggerFactory.getLogger("Launcher")
 
+
+
 fun main(args: Array<String>) {
     System.setProperty("vertx.logger-delegate-factory-class-name", "io.vertx.core.logging.SLF4JLogDelegateFactory")
     logger.info("==================== start.")
-    Vertx.vertx().deployVerticle(MainServer())
+    GlobalBox.vertx.deployVerticle(MainServer())
     launchNestStorage()
 
+}
+
+object GlobalBox {
+    val vertx: Vertx by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+        Vertx.vertx()
+    }
 }
 
 fun launchNestStorage(): Timer {

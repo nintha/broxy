@@ -27,6 +27,7 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
     
     compile 'io.vertx:vertx-core:3.6.2'
+    compile 'io.vertx:vertx-web:3.6.2'
     compile 'io.vertx:vertx-web-client:3.6.2'
     compile 'io.vertx:vertx-lang-kotlin-coroutines:3.6.2'
 }
@@ -39,7 +40,7 @@ compileTestKotlin {
 }
 
 jar {
-    manifest.attributes 'Main-Class': 'com.github.nintha.LauncherKt'
+    manifest.attributes 'Main-Class': 'top.nintha.broxy.LauncherKt'
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }

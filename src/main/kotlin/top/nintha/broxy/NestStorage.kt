@@ -61,7 +61,7 @@ class NestStorage {
         fun getSize(): Int = storage.size
 
         fun notInStorage(address: String): Boolean {
-            if(StringUtils.isBlank(address)) return false
+            if (StringUtils.isBlank(address)) return false
             return !storage.containsKey(iaToLong(address))
         }
 
@@ -78,19 +78,11 @@ class NestStorage {
         // 对所有代理进行校验并移除无效代理
         fun selfCheck() {
             logger.info("[selfCheck] start, storage size=${getSize()}")
-            fun check(item: String): Boolean {
-                return try {
-                    val strs = item.split(":")
-                    val html = HttpSender.get(HttpSender.TEST_URL, strs[0], strs[1].toInt())
-                    StringUtils.isNotBlank(html)
-                } catch (e: Exception) {
-                    false
-                }
-            }
 
-            val invalidItems = getAllAddress().map {
-                CompletableFuture.supplyAsync(Supplier { Pair(it, check(it)) }, HttpSender.threadPool)
-            }.asSequence().map { it.get() }.filter { !it.second }.map { it.first }.toSet()
+            val allAddress = getAllAddress().toSet()
+            val validItems = HttpAsyncSender.instance.checkProxies(allAddress)
+            val invalidItems = allAddress.filterNot { validItems.contains(it) }
+
             invalidItems.forEach { remove(it) }
             saveData()
             logger.info("[selfCheck] remove invalid items=${invalidItems.size}, storage size=${getSize()}")
@@ -113,7 +105,7 @@ class NestStorage {
             try {
                 val ipParts = ip.split(".")
                 return ipParts[0].toLong().shl(24) + ipParts[1].toLong().shl(16) + ipParts[2].toLong().shl(8) + ipParts[3].toLong()
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 logger.error("ip=$ip", e)
             }
             return 0

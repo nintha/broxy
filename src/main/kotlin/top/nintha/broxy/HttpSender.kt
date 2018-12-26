@@ -1,28 +1,24 @@
 package top.nintha.broxy
 
-import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.net.InetSocketAddress
 import java.net.Proxy
-import java.net.SocketTimeoutException
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
-import java.util.concurrent.ThreadLocalRandom
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.*
+import java.util.function.Supplier
 
 
 class HttpSender {
     companion object {
         private val logger: Logger = LoggerFactory.getLogger(HttpSender::class.java)
-        val threadPool: ExecutorService = Executors.newFixedThreadPool(128)
+//        val threadPool: ExecutorService = Executors.newFixedThreadPool(128)
         const val LOCALHOST = "127.0.0.1"
-        const val TEST_URL = "http://api.bilibili.com/x/web-interface/card?mid=128"
+//        const val TEST_URL = "http://api.bilibili.com/x/web-interface/card?mid=128"
 //        const val TEST_URL = "http://api.bilibili.com/x/web-interface/archive/stat?aid=1"
 //        const val TEST_URL = "http://ip.taobao.com/service/getIpInfo.php?ip=127.0.0.1"
-//        const val TEST_URL = "http://ip-api.com/json"
+        const val TEST_URL = "http://ip-api.com/json"
 
         private val USER_AGENTS = listOf(
                 "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070731 Ubuntu/dapper-security Firefox/1.5.0.12",
@@ -96,8 +92,3 @@ class HttpSender {
     }
 }
 
-//fun main(args: Array<String>) {
-//    BasicConfigurator.configure();
-//    HttpSender.download("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536077137419&di=5b065bbb375567190ad7846caa400af1&imgtype=0&src=http%3A%2F%2Fwww.bccn.net%2Fmedia%2Fnews%2F2017%2F02%2F05%2F1486250718_08749387.png", "0.png")
-//    println("done")
-//}

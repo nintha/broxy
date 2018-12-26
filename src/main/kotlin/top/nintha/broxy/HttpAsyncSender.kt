@@ -12,7 +12,14 @@ import io.vertx.kotlin.coroutines.dispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
-class HttpAsyncSender(val vertx: Vertx) {
+class HttpAsyncSender private constructor(private val vertx: Vertx) {
+    companion object {
+        val instance: HttpAsyncSender by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            HttpAsyncSender(GlobalBox.vertx)
+        }
+    }
+
+
     private fun spiltUrl(url: String): Pair<String, String> {
         return url.split("://")[1].split("/", limit = 2).let { Pair(it[0], "/${it[1]}") }
     }
@@ -27,8 +34,8 @@ class HttpAsyncSender(val vertx: Vertx) {
                 proxyOptions.host = part[0]
                 proxyOptions.port = part[1].toInt()
             }
-            connectTimeout = 2000
-            idleTimeout = 1
+            connectTimeout = 4000
+            idleTimeout = 2
             isKeepAlive = false
             userAgent = HttpSender.randomUserAgent()
         }
@@ -45,6 +52,10 @@ class HttpAsyncSender(val vertx: Vertx) {
         }
     }
 
+    /**
+     * @param proxies 待检测的proxy
+     * @return 可用的proxy
+     */
     fun checkProxies(proxies: Collection<String>): Set<String> = runBlocking(vertx.dispatcher()) {
         proxies.map { proxy ->
             async {

@@ -4,9 +4,6 @@ import io.vertx.core.AbstractVerticle
 import io.vertx.ext.web.Router
 import io.vertx.core.http.HttpServerOptions
 
-
-
-
 class MainServer : AbstractVerticle() {
     override fun start() {
         val serverOptions = HttpServerOptions().setCompressionSupported(true)
